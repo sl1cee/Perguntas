@@ -1,90 +1,91 @@
-# Frequently Asked Questions
+# Perguntas frequentes
 
-In this page, some very basic, frequently-asked questions are answered. It's important to understand that **these examples are generic** and will most likely not work if you just copy/paste them in your code. You need to **understand** these lines, not just blindly shove them in your code.
 
-## Code Examples
+Nesta página, algumas perguntas muito básicas e frequentes são respondidas. É importante entender que **esses exemplos são genéricos** e provavelmente não funcionarão se você simplesmente copiá-los / colá-los em seu código. Você precisa **entender** essas linhas, e não apenas colocá-las cegamente em seu código.
 
-## Bot and Bot Client
+## Exemplos de código
 
-```javascript
-// Set the bot's "Playing: " status (must be in an event!)
-// NOTE: THIS METHOD IS DEPRECATED AS OF VERSION 11.3 AND WILL BE REMOVED IN VERSION 12
-client.on("ready", () => {
-    client.user.setGame("with my code");
-});
-
-// NOTE: INTRODUCED IN VERSION 11.3 AND REPLACES setGame
-client.on("ready", () => {
-    client.user.setActivity({game: {name: "with my code", type: 0}});
-});
-```
+## Cliente Bot e Bot
 
 ```javascript
-// Set the bot's online/idle/dnd/invisible status
+// Defina o status "Playing:" do bot (deve estar em um evento!)
+// NOTA: ESTE MÉTODO É DEPRECADO A PARTIR DA VERSÃO 11.3 E SERÁ REMOVIDO NA VERSÃO 12
+client.on("ready", () => {
+    client.user.setGame("texto");
+});
+
+// NOTA: INTRODUZIDO NA VERSÃO 11.3 E SUBSTITUI setGame
+client.on("ready", () => {
+    client.user.setActivity({game: {name: "texto", type: 0}});
+});
+
+
+```javascript
+// Definir o bot online/idle/dnd/invisible status
 client.on("ready", () => {
     client.user.setStatus("online");
 });
 ```
 
-## Users and Members
+## Usuários e membros
 
-> In these examples `Guild` is a placeholder for where you get the guild. This can be `message.guild` or `member.guild` or just `guild` depending on the event. Or, you can get the guild by ID \(see next section\) and use that, too!
+> Nestes exemplos, `Guild` é um espaço reservado para onde você recebe a guilda. Isso pode ser `message.guild` ou `member.guild` ou apenas `guild` dependendo do evento. Ou você pode obter a guilda por ID \ (veja a próxima seção \) e usar isso também!
 
 ```javascript
 // Get a User by ID
-client.users.get("user id here");
+client.users.get("user id");
 // Returns <User>
 ```
 
 ```javascript
-// Get a Member by ID
-message.guild.members.get("user ID here");
+// Obter um membro por ID
+message.guild.members.get("user ID");
 // Returns <Member>
 ```
 
 ```javascript
-// Get a Member from message Mention
+// Obter um membro da menção de mensagem
 message.mentions.members.first();
 // Returns <Member>
 ```
 
 ```javascript
-// Send a Direct Message to a user
+// Enviar uma mensagem direta para um usuário
 message.author.send("hello");
-// With Member it works too:
+// Com Member, também funciona:
 message.member.send("Heya!");
 ```
 
 ```javascript
-// Mention a user in a message
+// Mencione um usuário em uma mensagem
 message.channel.send(`Hello ${user}, and welcome!`);
-// or
+// ou
 message.channel.send("Hello " + message.author.toString() + ", and welcome!");
 ```
 
 ```javascript
-// Restrict a command to a specific user by ID
+// Restringir um comando a um usuário específico por ID
 if (message.content.startsWith(prefix + 'commandname')) {
     if (message.author.id !== 'A user ID') return;
-    // Your Command Here
+    // Seu comando aqui
 }
 ```
 
 ```javascript
-// FETCH a member. Useful if an invisible user sends a message.
+// BUSQUE um membro. Útil se um usuário invisível enviar uma mensagem.
 message.guild.fetchMember(message.author)
   .then(member => {
-    // The member is available here.
+    // O membro está disponível aqui.
   });
 
-// THIS CHANGES IN DISCORD VERSION 12!!!!!
+// ESTE MUDANÇAS NA VERSÃO DE DISCORD 12 !!!!!
 message.guild.members.fetch(message.author)
   .then(member => {
-    // The member is available here.
+    // O membro está disponível aqui.
   });
 ```
 
-## Channels and Guilds
+## Canais e Guildas
 
 ```javascript
 // Get a Guild by ID
@@ -113,9 +114,9 @@ message.guild.channels.get('<CHANNEL ID>').createInvite().then(invite =>
 );
 ```
 
-### Default Channel
+### Canal padrão
 
-As of 03/08/2017, **there is no more Default Channel** in guilds on Discord. The \#general default channel can be deleted, and the `guild.defaultChannel` property no longer works. As an alternative, for those _really_ wanting to send to what "looks" like the default channel, here's a dirty workaround.
+A partir de 03/08/2017, ** não há mais Canal Padrão ** nas guildas da Discord. O canal padrão # # geral pode ser deletado, e a propriedade `guild.defaultChannel` não funciona mais. Como alternativa, para aqueles que realmente querem enviar para o que se parece com o canal padrão, aqui está uma solução suja.
 
 ```javascript
 const getDefaultChannel = async (guild) => {
@@ -143,9 +144,10 @@ client.on("guildMemberAdd", member => {
 });
 ```
 
-It's very important to note that if the bot has admin perms, their "First writable channel" is the one on top. That could be Rules, Announcements, FAQs, whatever. So if the default channel was deleted and there's no general channel, you're going to annoy a lot of people.
 
-Consider using [Enmap](https://npmjs.com/package/enmap) for per-guild settings instead \([example here](https://gist.github.com/eslachance/5c539ccebde9fa76340fb5d54889aa22)\) and let server admins **choose** a channel!
+É muito importante notar que, se o bot tiver admin perms, seu "Primeiro canal gravável" é o que está no topo. Isso poderia ser Regras, Anúncios, FAQs, o que for. Então, se o canal padrão foi excluído e não há um canal geral, você vai incomodar muita gente.
+
+Considere usar [Enmap](https://npmjs.com/package/enmap) para configurações por guilda \([example here](https://gist.github.com/eslachance/5c539ccebde9fa76340fb5d54889aa22)\) e deixe os administradores do servidor **escolher** um canal!
 
 ## Messages
 
