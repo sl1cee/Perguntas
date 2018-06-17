@@ -20,7 +20,7 @@ client.on("ready", () => {
 });
 
 
-```javascript
+
 // Definir o bot online/idle/dnd/invisible status
 client.on("ready", () => {
     client.user.setStatus("online");
